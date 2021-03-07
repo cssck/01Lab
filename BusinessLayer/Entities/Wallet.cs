@@ -98,35 +98,53 @@ namespace BusinessLayer.Entities
             owner.Wallets.Add(this);
         }
 
-        public void ExcludeCategory(Customer customer, Category category)
+        public bool ExcludeCategory(Customer customer, Category category)
         {
             if (customer.Equals(this.Owner))
+            {
                 _excludedCategories.Add(category);
+                return true;
+            }
+            return false;
         }
 
-        public void AllowCategory(Customer customer, Category category)
+        public bool AllowCategory(Customer customer, Category category)
         {
             if (customer.Equals(this.Owner))
+            { 
                 _excludedCategories.Remove(category);
+                return true;
+            }
+            return false;
         }
 
-        public void EditWalletName(Customer customer, string name)
+        public bool EditWalletName(Customer customer, string name)
         {
             if (customer.Equals(this.Owner))
+            { 
                 this.Name = name;
+                return true;
+            }
+            return false;
         }
-        public void EditWalletOwner(Customer customer, Customer target)
+        public bool EditWalletOwner(Customer customer, Customer target)
         {
             if (customer.Equals(this.Owner))
             {
                 this.Owner = target;
                 target.AccessibleWallets.Remove(this);
+                return true;
             }
+            return false;
         }
-        public void EditWalletDescription(Customer customer, string description)
+        public bool EditWalletDescription(Customer customer, string description)
         {
             if (customer.Equals(this.Owner))
+            {
                 this.Description = description;
+                return true;
+            }
+            return false;
         }
 
         public Transaction AddTransaction(Customer sender, Wallet senderWallet, decimal amount, Currency currency, Category category, string description)
